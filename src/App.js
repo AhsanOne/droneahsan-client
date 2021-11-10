@@ -6,15 +6,15 @@ import {
   Link
 } from "react-router-dom";
 import './App.css';
+import Home from './Pages/Home/Home/Home';
 
 function App() {
   return (
     <div className="App">
-      <h1>Drone Ahsan...</h1>
       <Router>
         <Switch>
-          <Route path="/testrouter">
-            <Link to="/"><Button variant="contained">I am mui btn</Button></Link>
+          <Route exact path="/">
+            <Home/>
           </Route>
         </Switch>
       </Router>
