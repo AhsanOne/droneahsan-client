@@ -1,22 +1,32 @@
-import { Button } from '@mui/material';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import './App.css';
+import Dashboard from './Pages/Dashboard/Dashboard/Dashboard';
 import Home from './Pages/Home/Home/Home';
+import Login from './Pages/Login/Login/Login';
+import Register from './Pages/Login/Register/Register';
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Switch>
+        </Switch>
           <Route exact path="/">
             <Home/>
           </Route>
-        </Switch>
+          <Route exact path="/dashboard">
+            <Dashboard/>
+          </Route>
+          <Route exact path="/login">
+            <Login/>
+          </Route>
+          <Route exact path="/register">
+            <Register/>
+          </Route>
       </Router>
     </div>
   );

@@ -8,6 +8,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 
 const Navigation = () => {
@@ -18,6 +19,7 @@ const Navigation = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
     return (
         <Box sx={{ flexGrow: 1, }}>
             <AppBar sticky="top" sx={{ backgroundColor:"#69a6ed", boxShadow:"none" }}>
@@ -28,7 +30,8 @@ const Navigation = () => {
                     <Typography>
                         <Button sx={{color:"white"}}>Home</Button>
                         <Button sx={{color:"white"}}>Products</Button>
-                        <Button sx={{color:"white"}}>Login</Button>
+                        <Button sx={{color:"white"}}>Dashboard</Button>
+                        <Link to="/login"><Button sx={{color:"white"}}>Login</Button></Link>
                     </Typography>
                         <div>
                             <IconButton
