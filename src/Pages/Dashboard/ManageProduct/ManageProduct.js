@@ -8,7 +8,7 @@ const ManageProduct = () => {
     const [products, setProducts] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:5000/products')
+        fetch('https://whispering-woodland-67196.herokuapp.com/products')
             .then(res => res.json())
             .then(data => setProducts(data))
     }, [])
@@ -16,7 +16,7 @@ const ManageProduct = () => {
     const handleDeleteProduct = id => {
         const procced = window.confirm('Are you sure, You want to delete?')
         if (procced) {
-            fetch(`http://localhost:5000/product/${id}`, {
+            fetch(`https://whispering-woodland-67196.herokuapp.com/product/${id}`, {
                 method: 'DELETE'
             })
                 .then(res => res.json())

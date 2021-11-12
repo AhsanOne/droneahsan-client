@@ -11,7 +11,7 @@ const Myorder = () => {
     const [orders, setOrders] = useState([])
 
     useEffect(() => {
-        const url = `http://localhost:5000/orders?email=${user.email}`
+        const url = `https://whispering-woodland-67196.herokuapp.com/orders?email=${user.email}`
         fetch(url)
             .then(res => res.json())
             .then(data => setOrders(data))
@@ -20,7 +20,7 @@ const Myorder = () => {
     const handleCancelOrder = (id) => {
         const procced = window.confirm('Are you sure, You want to delete?')
         if (procced) {
-            fetch(`http://localhost:5000/orders/${id}`, {
+            fetch(`https://whispering-woodland-67196.herokuapp.com/orders/${id}`, {
                 method: 'DELETE'
             })
                 .then(res => res.json())

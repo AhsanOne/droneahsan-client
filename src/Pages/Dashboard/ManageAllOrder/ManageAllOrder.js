@@ -11,7 +11,7 @@ const ManageAllOrder = () => {
     const { user } = useAuth()
 
     useEffect(() => {
-        fetch('http://localhost:5000/allorders')
+        fetch('https://whispering-woodland-67196.herokuapp.com/allorders')
             .then(res => res.json())
             .then(data => setOrders(data))
     }, [])
@@ -20,7 +20,7 @@ const ManageAllOrder = () => {
         const updateOrder = order
         updateOrder.status = "approve"
         setUpdateOrder(updateOrder)
-        fetch(`http://localhost:5000/orders/${order._id}`, {
+        fetch(`https://whispering-woodland-67196.herokuapp.com/orders/${order._id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

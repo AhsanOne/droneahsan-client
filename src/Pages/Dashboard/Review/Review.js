@@ -19,7 +19,7 @@ const Review = () => {
         review['name'] = user.displayName
         e.preventDefault()
         
-        fetch('http://localhost:5000/reviews',{
+        fetch('https://whispering-woodland-67196.herokuapp.com/reviews',{
             method:'POST',
             headers:{
                 'content-type': 'application/json'

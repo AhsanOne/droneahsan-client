@@ -14,7 +14,7 @@ const Placeorder = () => {
     const [orderData, setOrderData] = useState()
     const [product, setProduct] = useState({})
     useEffect(() => {
-        const url = `http://localhost:5000/products/${id}`
+        const url = `https://whispering-woodland-67196.herokuapp.com/products/${id}`
         fetch(url)
             .then(res => res.json())
             .then(data => setProduct(data))
@@ -38,7 +38,7 @@ const Placeorder = () => {
         e.preventDefault()
         orderData['status'] = 'Pending'
         orderData['product'] = product
-        fetch("http://localhost:5000/orders", {
+        fetch("https://whispering-woodland-67196.herokuapp.com/orders", {
             method: "POST",
             headers: {
                 'content-type':'application/json'
