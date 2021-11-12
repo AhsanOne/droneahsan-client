@@ -1,4 +1,10 @@
 import * as React from 'react';
+import {
+    Switch,
+    Route,
+    Link,
+    useRouteMatch,
+} from "react-router-dom";
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -24,9 +30,21 @@ import Typography from '@mui/material/Typography';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Menu, MenuItem } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
+import Pay from '../Pay/Pay';
+import Myorder from '../Myorder/Myorder';
+import Review from '../Review/Review';
+import AddProduct from '../AddProduct/AddProduct';
+import MakeAdmin from '../MakeAdmin/MakeAdmin';
+import ManageAllOrder from '../ManageAllOrder/ManageAllOrder';
+import useAuth from '../../../hooks/useAuth';
+import AdminRoute from '../../Login/AdminRoute/AdminRoute';
+import ManageProduct from '../ManageProduct/ManageProduct';
+import DashboardHome from '../DashboardHome/DashboardHome';
 const drawerWidth = 240;
 
 function Dashboard(props) {
+    const {user, admin, logoutUser} = useAuth()
+    let { path, url } = useRouteMatch();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const { window } = props;
     const handleMenu = (event) => {
@@ -52,65 +70,83 @@ function Dashboard(props) {
                 </ListItem>
             </List>
             <Divider />
-            <List>
-                <ListItem button>
-                    <ListItemIcon>
-                        <AddShoppingCartIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="My Order" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <AccountBalanceIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Pay" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <ReviewsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Review" />
-                </ListItem>
-                <ListItem button>
+            {
+                !admin && <List>
+                <Link to={`${url}/myorder`}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <AddShoppingCartIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="My Order" />
+                    </ListItem>
+                </Link>
+                <Link to={`${url}/pay`}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <AccountBalanceIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Pay" />
+                    </ListItem>
+                </Link>
+                <Link to={`${url}/review`}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <ReviewsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Review" />
+                    </ListItem>
+                </Link>
+                <ListItem onClick={logoutUser} button>
                     <ListItemIcon>
                         <LogoutIcon />
                     </ListItemIcon>
                     <ListItemText primary="Logout" />
                 </ListItem>
             </List>
+            }
             <Divider />
-            <List>
-                <ListItem button>
-                    <ListItemIcon>
-                        <ManageSearchIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Manage All Orders" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <AddIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Add A Product" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <AdminPanelSettingsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Make Admin" />
-                </ListItem>
+            {
+                admin && <List>
+                <Link to={`${url}/manageallorder`}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <ManageSearchIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Manage All Orders" />
+                    </ListItem>
+                </Link>
+                <Link to={`${url}/addproduct`}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <AddIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Add A Product" />
+                    </ListItem>
+                </Link>
+                <Link to={`${url}/makeadmin`}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <AdminPanelSettingsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Make Admin" />
+                    </ListItem>
+                </Link>
+                <Link to={`${url}/manageproducts`}>
                 <ListItem button>
                     <ListItemIcon>
                         <ManageAccountsIcon />
                     </ListItemIcon>
                     <ListItemText primary="Manage Products" />
                 </ListItem>
-                <ListItem button>
+                </Link>
+                <ListItem onClick={logoutUser} button>
                     <ListItemIcon>
                         <LogoutIcon />
                     </ListItemIcon>
                     <ListItemText primary="Logout" />
                 </ListItem>
             </List>
+            }
         </div>
     );
 
@@ -124,8 +160,8 @@ function Dashboard(props) {
                 sx={{
                     width: { sm: `calc(100% - ${drawerWidth}px)` },
                     ml: { sm: `${drawerWidth}px` },
-                    backgroundColor:"#69a6ed",
-                    boxShadow:"none"
+                    backgroundColor: "#69a6ed",
+                    boxShadow: "none"
                 }}
             >
                 <Toolbar>
@@ -142,35 +178,36 @@ function Dashboard(props) {
                         DRONEAHSAN
                     </Typography>
                     <div className="ms-auto">
-                            <IconButton
-                                size="large"
-                                aria-label="account of current user"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={handleMenu}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton>
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorEl}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
-                            >
-                                <MenuItem >Profile</MenuItem>
-                                <MenuItem >My account</MenuItem>
-                            </Menu>
-                        </div>
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleMenu}
+                            color="inherit"
+                        >
+                            <AccountCircle />
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorEl}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                        >
+                            <MenuItem >{user.displayName}</MenuItem>
+                            <MenuItem >My account</MenuItem>
+                            <MenuItem onClick={logoutUser}>Logout</MenuItem>
+                        </Menu>
+                    </div>
                 </Toolbar>
             </AppBar>
             <Box
@@ -207,36 +244,35 @@ function Dashboard(props) {
             </Box>
             <Box
                 component="main"
-                sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+                sx={{ backgroundColor: "#f8f8f8", flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
             >
                 <Toolbar />
-                <Typography paragraph>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-                    enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-                    imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-                    Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-                    Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                    adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-                    nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-                    leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-                    feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-                    consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-                    sapien faucibus et molestie ac.
-        </Typography>
-                <Typography paragraph>
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-                    eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-                    neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-                    tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-                    sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-                    tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-                    gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-                    et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-                    tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-                    eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-                    posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+                <Switch>
+                    <Route exact path={path}>
+                        <DashboardHome></DashboardHome>
+                    </Route>
+                    <Route exact path={`${path}/myorder`}>
+                        <Myorder></Myorder>
+                    </Route>
+                    <Route exact path={`${path}/pay`}>
+                        <Pay></Pay>
+                    </Route>
+                    <Route exact path={`${path}/review`}>
+                        <Review></Review>
+                    </Route>
+                    <AdminRoute exact path={`${path}/addproduct`}>
+                        <AddProduct></AddProduct>
+                    </AdminRoute>
+                    <AdminRoute exact path={`${path}/makeadmin`}>
+                        <MakeAdmin></MakeAdmin>
+                    </AdminRoute>
+                    <AdminRoute exact path={`${path}/manageallorder`}>
+                        <ManageAllOrder></ManageAllOrder>
+                    </AdminRoute>
+                    <AdminRoute exact path={`${path}/manageproducts`}>
+                        <ManageProduct></ManageProduct>
+                    </AdminRoute>
+                </Switch>
             </Box>
         </Box>
     );

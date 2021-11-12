@@ -1,21 +1,22 @@
 import React from 'react'
-import { Col, Card, Button } from 'react-bootstrap'
-
+import { Col, Card } from 'react-bootstrap'
+import { Button } from '@mui/material'
+import {Link} from 'react-router-dom'
 
 const Product = (props) => {
-    const { name, price, description, img_url } = props.product
+    const { name, price, description, img_url, _id } = props.product
     return (
         <Col>
-            <Card className="border-0">
+            <Card className="h-100">
                 <Card.Img style={{height:"203px", padding:"10px"}} variant="top" src={img_url} />
                 <Card.Body className="text-start">
-                    <Card.Title className="text-primary">{name}</Card.Title>
+                    <Card.Title>{name}</Card.Title>
                     <Card.Text className="text-main">
-                        {description.slice(0, 90)}
+                        {description.slice(0, 51)}
                     </Card.Text>
                     <div className="d-flex justify-content-between align-items-center">
                         <h5 className="mb-0">${price}</h5>
-                        <Button variant="primary">Primary</Button>
+                        <Link to={`/placeorder/${_id}`}><Button color="error" variant="outlined">buy now</Button></Link>
                     </div>
                 </Card.Body>
             </Card>
